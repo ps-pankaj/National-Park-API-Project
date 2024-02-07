@@ -1,0 +1,66 @@
+@model NationalparkWebApp.Models.ViewModels.IndexVM
+@foreach (var natonalPark in Model.NationalParkList)
+{
+    <div class="container backgroundWhite pb-4">
+        <div class="card border">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-12 col-md-6">
+                    <h1 class="text-warning">@natonalPark.Name</h1>
+                </div>
+                <div class="col-12 col-md-6 text-md-right">
+                    <h1 class="text-warning">State : @natonalPark.State</h1>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3 style="color:#bbb9b9">Established:@natonalPark.Established.Year </h3>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-striped" style="border:1px solid #808080 ">
+                                        <thead>
+                                        <tr class="table-secondary">
+                                            <th>
+                                                Trail
+                                            </th>
+                                            <th>Distance</th>
+                                            <th>Elevation Gain</th>
+                                            <th>Difficulty</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                var trails = Model.TrailList.Where(t => t.NationalParkId == natonalPark.Id);
+                                            }
+                                            @foreach(var trail in trails)
+                                            {
+                                                <tr>
+                                                    <td>@trail.Name</td>
+                                                    <td>@trail.Distance</td>
+                                                    <td>@trail.Elevation</td>
+                                                    <td>@trail.Difficalty</td>
+                                                </tr>
+                                                
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4 text-center">
+                            @{
+                                var base64 = Convert.ToBase64String(@natonalPark.Picture);
+                                var imgSrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                
+                            }
+                            <img src="@imgSrc" class="card-img-top p-2 rounded" width="100%" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

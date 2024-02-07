@@ -1,0 +1,83 @@
+﻿@model NationalParkWebApp.Models.ViewModels.TrailVM
+@{
+    ViewData["Title"] = "Upsert";
+    var title = Model.Trail.Id != 0 ? "Edit Trail" : "New Trail";
+    var saveUpdate = Model.Trail.Id != 0 ? "Update" : "Save";
+}
+
+<form method="post" asp-action="Upsert">
+    <div class="row border">
+        @if (Model.Trail.Id != 0)
+        {
+            <input type="hidden" asp-for="@Model.Trail.Id" />
+
+        }
+        <div class="col-8 border-bottom p-2 m-2">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8">
+            <div class="form-group row p-2 m-2">
+                <div class="col-4">
+                    <label asp-for="Trail.NationalParkId"></label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m=>Model.Trail.NationalParkId,Model.nationalParkList,"Select National Park",new{@class="form-control"})
+                    <span asp-validation-for="Trail.NationalParkId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row p-2 m-2">
+                <div class="col-4">
+                    <label asp-for="Trail.Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Trail.Name" class="form-control" />
+                    <span asp-validation-for="Trail.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row p-2 m-2">
+                <div class="col-4">
+                    <label asp-for="Trail.Distance"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Trail.Distance" class="form-control" />
+                    <span asp-validation-for="Trail.Distance" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row p-2 m-2">
+                <div class="col-4">
+                    <label asp-for="Trail.Elevation"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Trail.Elevation" class="form-control" />
+                    <span asp-validation-for="Trail.Elevation" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row p-2 m-2">
+                <div class="col-4">
+                    <label asp-for="Trail.Difficulty"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-items="Html.GetEnumSelectList<NationalParkWebApp.Models.Trail.DifficultyType>()" asp-for="Trail.Difficulty" class="form-control"></select>
+                    <span asp-validation-for="Trail.Difficulty" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row p-2 m-2">
+                <div class="col-4 offset-4">
+                    <button class="btn btn-info form-control" type="submit">
+                        @saveUpdate
+                    </button>
+                </div>
+                <div class="col-4">
+                  <a asp-action="Index" class="btn btn-success form-control">
+                      Back To List
+                  </a>
+                </div>
+            </div>          
+
+        </div>
+        </div>
+      
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

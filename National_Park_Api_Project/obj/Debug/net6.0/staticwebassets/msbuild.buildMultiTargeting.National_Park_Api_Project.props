@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\National_Park_Api_Project.props" />
+</Project>
